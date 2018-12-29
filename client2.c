@@ -203,7 +203,8 @@ int do_server(char *self, const char *side, union address_t *address, socklen_t 
 				basename(self), side, strerror(errno));
 	}
 	for(attempt = 0l; attempt < connect_tries; ++attempt) {
-		usleep(connect_interval * (long)1000);
+		if(attempt)
+			usleep(connect_interval * (long)1000);
 		if(!connect(sock, (const struct sockaddr*)address, size))
 			break;
 	}
